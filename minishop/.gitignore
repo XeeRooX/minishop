@@ -1,0 +1,13 @@
+﻿*.db
+*.db-shm
+*.db-wal
+
+*.autofetch
+*.sql
+.classpath
+.project
+.settings/
+target/
+logs/
+log/
+/db
