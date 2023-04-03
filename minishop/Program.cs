@@ -1,9 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using minishop.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+    context!.Database.Migrate();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
