@@ -7,7 +7,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+   
 }
+
+.text-card {
+    text-decoration: none;
+    color: black;
+}
+    .text-card:hover {
+        color: #b2974a;
+    }
 
 .center-content {
     display: flex;
@@ -37,4 +46,16 @@
     box-shadow: 0px 0px 12px 2px rgba(34, 60, 80, 0.2);
     border-radius: 18px;
 
+}
+
+
+.input-filter{
+    border-radius: 15px;
+}
+.input-filter:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #ffd86a;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(255,216,106,.25);
 }
