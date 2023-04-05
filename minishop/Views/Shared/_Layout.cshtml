@@ -2,19 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewData["Title"] - minishop</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/indexLayout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/minishop.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-light bg-light">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-st">
+            <div class="container ">
                 <a class="navbar-brand" href="#">
-                    <img src="" alt="minishop" width="30" height="24">
+                    <img src="~/imgs/layout/logo.png" alt="minishop" width="55">
                 </a>
+               
+                <div class="justify-content-start d-flex" id="navbarNav" >
+                    <a class="d-inline btn cart-button p-2 d-flex align-items-center justify-content-center">
+                        <img src="~/imgs/layout/cart.png" alt="minishop" width="33" class="me-1">
+                        <span class=" badge rounded-pill bg-black ms-0">
+                            0
+                        </span>
+                    </a>
+                    <div class="nav-item dropstart">
+                        <a class=" mx-2 p-0 nav-link " href="#" id="user-info" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/imgs/layout/user.png" alt="user" width="50" class="me-1 user-button p-1">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="user-info" style="border-radius: 18px;">
+                            <li>
+                                <label class="dropdown-item mt-2">Василий Петрович</label>
+                            </li>
+                            <li>
+                                <div class="px-3 pt-2">
+                                    <a class="dropdown-item py-2 cart-button text-center ">
+                                        Выйти
+                                    </a>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>

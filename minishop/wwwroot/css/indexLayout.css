@@ -1,0 +1,22 @@
+﻿.cart-button{
+    background-color: #f8f9fa;
+    font-size: 15px;
+    border-radius: 18px;
+}
+
+.cart-button:hover, .user-button:hover {
+    background-color: #c5c6c6;
+}
+
+.navbar-st {
+    background-color: #fff;
+}
+
+.dropdown-item:active {
+    background-color: #929393;
+}
+
+.user-button {
+    background-color: #f8f9fa;
+    border-radius: 50%;
+}
