@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "товар наме";
 }
-
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <div class="p-2 container">
     <h4 class="">Смартфон realme Realme 10 4G 8/128 ГБ, черный</h4>
     <div class="row">
@@ -13,20 +13,27 @@
         </div>
         <div class=" p-2 col-md-4 size-col-price">
             <div class="p-2  details-product-container">
-                <div class="d-flex" style="width:auto;">
-                    <div class="">
-                        <p class="price-container  p-2">30 918 ₽</p>
+                <div class="row " style="height:auto;">
+                    <div class="col-sm-12 col-md-12 col-lg-6 ">
+                        <p class="price-container  w-100 p-2 text-center">30 918 ₽</p>
                     </div>
-                    <div class="my-3 d-flex">
-">
-                        <p class="px-4">шт: 1</p>
-                        <div style="text-align: right;">
-                        <button type="button" class="btn btn-plus-min p-0 mx-1">+</button>
+                    <div class=" mb-3 col-lg-6 d-flex center-content text-center" style="height:auto;">
+                        <p class=" m-0  text-center">шт: 1</p>
+                        <div style="margin-left: auto; margin-right: 0em;" class="d-flex">
+                            <button type="button"  class="btn btn-plus-min center-content-vh mx-2">
+                                <img src="/imgs/product/plus.png" width="14px" >
+                            </button>
+                            <button type="button" class="btn btn-plus-min center-content-vh  mx-2">
+                                <img src="/imgs/product/minus.png" width="14px">
+                            </button>
                         </div>
                     </div>
+                    @* <div style="" class="my-0 col-sm-4">
+
+                    </div>*@
                 </div>
 
-                <button type="button" class="btn btn-add-cart p-3">Добавить в корзину</button>
+                <button type="button" class="btn  btn-card p-3 w-100">Добавить в корзину</button>
             </div>
 
         </div>
