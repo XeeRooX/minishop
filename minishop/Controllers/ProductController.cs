@@ -10,7 +10,7 @@ namespace minishop.Controllers
             return View();
         }
 
-        public IActionResult Index(string category, )
+        public IActionResult Index(string category)
         {
             ViewBag.Category = category;
             List<ProductCard> products = new List<ProductCard>() {  
