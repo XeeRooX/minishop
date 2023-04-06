@@ -12,6 +12,7 @@ namespace minishop.Controllers
 
         public IActionResult Index(string category)
         {
+            //Commit
             ViewBag.Category = category;
             List<ProductCard> products = new List<ProductCard>() {  
                 new ProductCard()
