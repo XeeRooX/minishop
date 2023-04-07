@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Редактирование товара";
+
+}
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+<div class="p-2 container">
+    <h4 class="">Редактирование товара</h4>
+
+    <form>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Название</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Цена</label>
+            <div class="input-group">
+                <span class="input-group-text">₽</span>
+                <input type="number" class="form-control" id="exampleInputPassword1">
+            </div>
+
+        </div>
+
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Выберите тип часов</option>
+            <option value="1">Механические часы</option>
+            <option value="2">Электронные часы</option>
+            <option value="3">смарт-часы</option>
+        </select>
+
+        <div class="mb-3">
+            <label for="Description" class="form-label">Описание</label>
+
+            <textarea class="form-control" id="Description" aria-label="Описание"></textarea>
+        </div>
+        <p>Загрузите фото часов</p>
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile02" accept="image/*">
+            <label class="input-group-text" for="inputGroupFile02">Загрузка</label>
+        </div>
+
+        <button type="submit" class="btn btn-card">Сохранить</button>
+    </form>
+</div>
