@@ -65,15 +65,25 @@
         </div>
     </div>
 
-    <div class="row ">
-        @foreach (var product in Model)
+    <div class="row products-list">
+        @foreach (var pr in Model)
         {
-            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6">
-                <div class="card text-center card-content">
-                    <img src="https://api.lorem.space/image/watch?w=500&h=500" class="card-img-top" alt="...">
+            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6 product-card" id="@pr.Id">
+                @*<div class="card text-center card-content">
+                    <img src="~/imgs/products/@(product.Id).png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">@product.Title</h5>
                         <p class="card-text mb-4">$@product.Price</p>
+                        <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
+                    </div>
+                </div>*@
+                <div class="card text-center card-content">
+                    <img src="~/imgs/products/@(pr.Id).png" class="card-img-top card-img p-2" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/Products/@pr.Id" class="text-card">@pr.Title</a>
+                        </h5>
+                        <p class="card-text mb-4">@pr.Price ₽</p>
                         <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
                     </div>
                 </div>
