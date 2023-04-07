@@ -43,5 +43,15 @@ namespace minishop.Controllers
 
             return View(products);
         }
+
+        public IActionResult Create() 
+        {
+            return View();
+        }
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }
