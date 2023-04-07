@@ -24,53 +24,58 @@ namespace minishop.Controllers
 
         public IActionResult Index(string category)
         {
-            IEnumerable<Product> products;
+            int countCards = 8; 
+            ViewBag.Category = category;
+
+            IQueryable<Product> products;
             if (category == "mech")
             {
-                
+                products = context.Products.Where(p => p.TypeProductId == 2);
             }
             else if (category == "elec")
             {
+                products = context.Products.Where(p => p.TypeProductId == 1);
 
             }
             else if (category == "smart")
             {
-
+                products = context.Products.Where(p => p.TypeProductId == 3);
             }
             else
             {
-
+                products = context.Products;
             }
 
-            ViewBag.Category = category;
-            List<ProductCard> products1 = new List<ProductCard>() {
-                new ProductCard()
-                {
-                    Id = 1,
-                    Price = 200,
-                    Title = "Watch1"
-                },
-                new ProductCard()
-                {
-                    Id = 2,
-                    Price = 300,
-                    Title = "Watch2"
-                },
-                new ProductCard()
-                {
-                    Id = 3,
-                    Price = 400,
-                    Title = "Watch3"
-                },
-                new ProductCard()
-                {
-                    Id = 4,
-                    Price = 500,
-                    Title = "Watch3"
-                }
-            };
+            products = products.Take(countCards);
 
-            return View(products1);
+            var resProducts = new List<ProductCard>();
+
+            foreach (var pr in products)
+            {
+                resProducts.Add(new ProductCard()
+                {
+                    Id = pr.Id,
+                    Price = pr.Price,
+                    Title = pr.Name
+                });
+            }
+            
+            return View(resProducts);
+        }
+
+        [HttpPost]
+        public IActionResult LoadProducts([FromBody]LoadProductData prData)
+        {
+            if (ModelState.IsValid != true)
+            {
+                return BadRequest("Bad content");
+            }
+           
+            var products = from p in context.Products
+                           where p.Price >= prData.PriceFrom && p.Price <= prData.PriceTo
+                           select p;              
+
+            return Json(prData);
         }
 
         public IActionResult Create()
