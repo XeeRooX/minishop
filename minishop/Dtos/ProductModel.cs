@@ -1,4 +1,5 @@
 ﻿using minishop.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace minishop.Dtos
 {
@@ -10,6 +11,6 @@ namespace minishop.Dtos
         public double Price { get; set; }
         public int TypeProductId { get; set; }
 
-        IFormFile Foto { get; set; } = null!;
+        public IFormFile Foto { get; set; }
     }
 }
