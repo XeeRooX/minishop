@@ -20,9 +20,26 @@ namespace minishop.Controllers
 
         public IActionResult Index(string category)
         {
-            //Commit
+            IEnumerable<Product> products;
+            if (category == "mech")
+            {
+                
+            }
+            else if (category == "elec")
+            {
+
+            }
+            else if (category == "smart")
+            {
+
+            }
+            else
+            {
+
+            }
+
             ViewBag.Category = category;
-            List<ProductCard> products = new List<ProductCard>() {
+            List<ProductCard> products1 = new List<ProductCard>() {
                 new ProductCard()
                 {
                     Id = 1,
@@ -49,7 +66,7 @@ namespace minishop.Controllers
                 }
             };
 
-            return View(products);
+            return View(products1);
         }
 
         public IActionResult Create()
