@@ -2,6 +2,7 @@
 using minishop.Dtos;
 using minishop.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace minishop.Controllers
 {
@@ -21,6 +22,8 @@ namespace minishop.Controllers
             var products = _context.Products.Take(8).ToList();
             var resProds = new List<ProductCard>();
 
+            int userId = 1;
+
             foreach (var pr in products)
             {
                 resProds.Add(new ProductCard()
@@ -30,6 +33,20 @@ namespace minishop.Controllers
                     Title = pr.Name
                 });
             }
+
+            var user = _context.Users.Include(u => u.Cart!.CartItems).FirstOrDefault(u => u.Id == userId);
+
+            if (user != null)
+            {
+                foreach (var pr in resProds)
+                {
+                    if (user.Cart!.CartItems.FirstOrDefault(ci => ci.ProductId == pr.Id) != null)
+                    {
+                        pr.InCart = true;
+                    }
+                }
+            }
+
             return View(resProds);
         }
     }

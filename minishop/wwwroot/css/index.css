@@ -29,6 +29,21 @@
     align-items: center;
 }
 
+.btn-incard {
+    background-color: #929393;
+    color: #f8f9fa;
+    border-radius: 15px;
+    font-weight: 600;
+}
+.btn-incard:hover {
+    color: #f8f9fa;
+}
+
+.btn-incard:focus {
+    box-shadow: none;
+}
+
+
 .btn-card {
     background-color: #ffd86a;
     color: #f8f9fa;

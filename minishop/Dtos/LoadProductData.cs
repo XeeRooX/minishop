@@ -8,7 +8,6 @@ namespace minishop.Dtos
         public double PriceTo { get; set; }
         public int LastProductId { get; set; }
         public bool DescendingPrice { get; set; }
-        public bool AscendingPrice { get; set; }
-
+        public string? Category { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace minishop.Controllers
 
         public IActionResult Index(string category)
         {
-            int countCards = 8; 
+
             ViewBag.Category = category;
 
             IQueryable<Product> products;
@@ -42,7 +42,97 @@ namespace minishop.Controllers
                 products = context.Products;
             }
 
-            products = products.Take(countCards);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoadFromTo([FromBody] LoadProductData prData)
+        {
+            int countProducts = 8;
+            int userId = 1;
+
+
+            if (ModelState.IsValid != true)
+            {
+                return BadRequest("Bad content");
+            }
+
+            int categoryNumber = 0;
+
+            if (prData.Category == "mech")
+            {
+                categoryNumber = 2;
+            }
+            else if (prData.Category == "elec")
+            {
+                categoryNumber = 1;
+
+            }
+            else if (prData.Category == "smart")
+            {
+                categoryNumber = 3;
+            }
+
+                IQueryable<Product> products;
+
+            if (prData.LastProductId == 0)
+            {
+                if (prData.DescendingPrice)
+                {               
+                    products = from p in context.Products
+                               where p.Price >= prData.PriceFrom && p.Price <= prData.PriceTo
+                               where p.Id != prData.LastProductId
+                               orderby p.Price descending
+                               select p;
+                }
+                else
+                {
+                    products = from p in context.Products
+                               where p.Price >= prData.PriceFrom && p.Price <= prData.PriceTo
+                               where p.Id != prData.LastProductId
+                               orderby p.Price ascending
+                               select p;
+                }
+                
+            }
+            else
+            {
+                Product? lastProduct = context.Products.Find(prData.LastProductId);
+                if (lastProduct == null)
+                {
+                    return BadRequest("Product with Id=LastProductId not found");
+                }
+                double lastProductPrice = lastProduct.Price;
+                if (prData.DescendingPrice)
+                {
+                    products = from p in context.Products
+                               where p.Price >= prData.PriceFrom && p.Price <= lastProductPrice                              
+                               where p.Id != prData.LastProductId
+                               orderby p.Price descending
+                               select p;
+                }
+                else
+                {
+                    products = from p in context.Products
+                               where p.Price >= lastProductPrice && p.Price <= prData.PriceTo
+                               where p.Id != prData.LastProductId
+                               orderby p.Price ascending
+                               select p;
+                }
+                
+            }
+
+            if (categoryNumber != 0)
+            {
+                products = from p in products
+                           where p.TypeProductId == categoryNumber
+                           select p;
+            }
+
+            products = products.Take(countProducts + 1);
+            int countLoadedProducts = products.Count();
+
+            products = products.Take(countProducts);
 
             var resProducts = new List<ProductCard>();
 
@@ -55,26 +145,161 @@ namespace minishop.Controllers
                     Title = pr.Name
                 });
             }
-            
-            return View(resProducts);
+
+            var user = context.Users.Include(u => u.Cart!.CartItems).FirstOrDefault(u => u.Id == userId);
+
+            if (user != null)
+            {
+                foreach (var pr in resProducts)
+                {
+                    if (user.Cart!.CartItems.FirstOrDefault(ci => ci.ProductId == pr.Id) != null)
+                    {
+                        pr.InCart = true;
+                    }
+                }
+
+            }
+
+            bool lastPage = false;
+            if (countLoadedProducts != countProducts + 1)
+            {
+                lastPage = true;
+            }
+            return Json(new
+            {
+                lastPage = lastPage,
+                products = resProducts
+            }); ;
         }
 
         [HttpPost]
-        public IActionResult LoadProducts([FromBody]LoadProductData prData)
+        public IActionResult LoadByPrice([FromBody] LoadProductData prData)
         {
+            int countProducts = 8;
+            int userId = 1;
+
+
             if (ModelState.IsValid != true)
             {
                 return BadRequest("Bad content");
             }
-           
-            var products = from p in context.Products
-                           where p.Price >= prData.PriceFrom && p.Price <= prData.PriceTo
-                           select p;              
 
-            return Json(prData);
+            int categoryNumber = 0;
+
+            if (prData.Category == "mech")
+            {
+                categoryNumber = 2;
+            }
+            else if (prData.Category == "elec")
+            {
+                categoryNumber = 1;
+
+            }
+            else if (prData.Category == "smart")
+            {
+                categoryNumber = 3;
+            }
+
+            IQueryable<Product> products;
+
+            if (prData.LastProductId == 0)
+            {
+                if (prData.DescendingPrice)
+                {
+                    products = from p in context.Products
+                               orderby p.Price descending
+                               select p;
+                }
+                else
+                {
+                    products = from p in context.Products
+                               orderby p.Price ascending
+                               select p;
+                }
+            }
+            else
+            {
+                Product? lastProduct = context.Products.Find(prData.LastProductId);
+                if (lastProduct == null)
+                {
+                    return BadRequest("Product with Id=LastProductId not found");
+                }
+                double lastProductPrice = lastProduct.Price;
+
+                if (prData.DescendingPrice)
+                {
+                    products = from p in context.Products
+                               where p.Price <= lastProductPrice
+                               where p.Id != prData.LastProductId
+                               orderby p.Price descending
+                               select p;
+                }
+                else
+                {
+                    products = from p in context.Products
+                               where p.Price >= lastProductPrice
+                               where p.Id != prData.LastProductId
+                               orderby p.Price ascending
+                               select p;
+                }
+                
+            }
+
+            if (categoryNumber != 0)
+            {
+                products = from p in products
+                           where p.TypeProductId == categoryNumber
+                           select p;
+            }
+
+            products = products.Take(countProducts + 1);
+            int countLoadedProducts = products.Count();
+
+            products = products.Take(countProducts);
+
+            
+
+            var resProducts = new List<ProductCard>();
+
+            foreach (var pr in products)
+            {
+                resProducts.Add(new ProductCard()
+                {
+                    Id = pr.Id,
+                    Price = pr.Price,
+                    Title = pr.Name
+                });
+            }
+
+            var user = context.Users.Include(u => u.Cart!.CartItems).FirstOrDefault(u => u.Id == userId);
+
+            if (user != null)
+            {
+                foreach (var pr in resProducts)
+                {
+                    if (user.Cart!.CartItems.FirstOrDefault(ci => ci.ProductId == pr.Id) != null)
+                    {
+                        pr.InCart = true;
+                    }
+                }
+
+            }
+
+
+
+            bool lastPage = false;
+            if (countLoadedProducts != countProducts + 1)
+            {
+                lastPage = true;
+            }
+            return Json(new
+            {
+                lastPage = lastPage,
+                products = resProducts
+            }); ;
         }
 
-        public IActionResult Create()
+            public IActionResult Create()
         {
             ViewBag.Types = new SelectList(context.TypeProducts, "Id", "Name");
             return View();
