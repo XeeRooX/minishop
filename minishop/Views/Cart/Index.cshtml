@@ -1,90 +1,39 @@
-﻿@{
+﻿@using minishop.Models;
+@model List<CartItem>
+@{
     ViewData["Title"] = "Home Page";
 }
-<div class="p-2">
+<div class="p-2 cart-items">
     <h4 class="">Корзина</h4>
-    <div class="container cart-item-container p-2 m-4">
+    @foreach(var a in Model){
+    <div class="container cart-item-container p-2 m-4" id="@a.Id">
 
         <div class="row p-2">
-            <div class="col-12"><p class="price-text-shadow">1 товар</p></div>
+            <div class="col-12"><p class="price-text-shadow">@a.Count товар</p></div>
             <div class="col-2">
                 <div class="">
-                    <img src="https://www.kindpng.com/picc/m/115-1156797_watches-png-images-free-download-smart-watches-png.png" class="p-1 img-product">
+                    <img src="/imgs/products/@(a.ProductId).png" class="p-1 img-product">
                 </div>
             </div>
             <div class="col-8">
                 <p class="p-0 m-0">
-                    <a href="#" class="product-text"> Смартфон realme Realme 10 4G 8/128 ГБ, черный</a>
+                    <a href="/Product/@(a.ProductId)" class="product-text"> @a.Product.Name</a>
                 </p>
-                <p class="price-text-shadow">Цвет: черный</p>
+                <p class="price-text-shadow">@a.Product.Description</p>
             </div>
             <div class="col-2">
                 <p class="p-0 m-0" style="font-weight:700">
-                    30 918 ₽
+                    @(a.Count * a.Product.Price) ₽
                 </p>
                 <p class="price-text-shadow">
-                    1 шт по 30 918 ₽
+                        @a.Count шт по @a.Product.Price ₽
                 </p>
-                <button type="button" class="btn btn-delete-cart">Убрать</button>
+                <button type="button" id="@a.Id" class="btn btn-delete-cart del-btn-cart">Убрать</button>
             </div>
         </div>
     </div>
 
-    <div class="container cart-item-container p-2 m-4">
-
-        <div class="row p-2">
-            <div class="col-12"><p class="price-text-shadow">1 товар</p></div>
-            <div class="col-2">
-                <div class="">
-                    <img src="https://www.kindpng.com/picc/m/115-1156797_watches-png-images-free-download-smart-watches-png.png" class="p-1 img-product">
-                </div>
-            </div>
-            <div class="col-8">
-                <p class="p-0 m-0">
-                    <a href="#" class="product-text"> Смартфон realme Realme 10 4G 8/128 ГБ, черный</a>
-                </p>
-                <p class="price-text-shadow">Цвет: черный</p>
-            </div>
-            <div class="col-2">
-                <p class="p-0 m-0" style="font-weight:700">
-                    30 918 ₽
-                </p>
-                <p class="price-text-shadow">
-                    1 шт по 30 918 ₽
-                </p>
-                <button type="button" class="btn btn-delete-cart">Убрать</button>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container cart-item-container p-2 m-4">
-
-        <div class="row p-2">
-            <div class="col-12"><p class="price-text-shadow">1 товар</p></div>
-            <div class="col-2">
-                <div class="">
-                    <img src="https://www.kindpng.com/picc/m/115-1156797_watches-png-images-free-download-smart-watches-png.png" class="p-1 img-product">
-                </div>
-            </div>
-            <div class="col-8">
-                <p class="p-0 m-0">
-                    <a href="#" class="product-text"> Смартфон realme Realme 10 4G 8/128 ГБ, черный</a>
-                </p>
-                <p class="price-text-shadow">Цвет: черный</p>
-            </div>
-            <div class="col-2">
-                <p class="p-0 m-0" style="font-weight:700">
-                    30 918 ₽
-                </p>
-                <p class="price-text-shadow">
-                    1 шт по 30 918 ₽
-                </p>
-                <button type="button" class="btn btn-delete-cart">Убрать</button>
-            </div>
-        </div>
-    </div>
-
-
+    }
 
 </div>
+<script src="/js/cart.js"></script>

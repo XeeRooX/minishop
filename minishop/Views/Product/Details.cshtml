@@ -18,27 +18,60 @@
             <div class="p-2  details-product-container">
                 <div class="row " style="height:auto;">
                     <div class="col-sm-12 col-md-12 col-lg-6 ">
-                        <p class="price-container  w-100 p-2 text-center">@Model.Price ₽</p>
+                        <p class="price-container  w-100 p-2 text-center" value="@Model.Price">@(@Model.Price* Model.Count) ₽</p>
                     </div>
                     <div class=" mb-3 col-lg-6 d-flex center-content text-center" style="height:auto;">
-                        <p class=" m-0  text-center">шт: 1</p>
+                        
+                        
+                        @{
+                            if(Model.InCart)
+                            {
+                                <p class=" m-0  text-center count-cart" value="@Model.Count">шт: @Model.Count</p>
+
+                            }
+                            else{
+                                <p class=" m-0  text-center count-cart" value="1">шт: 1</p>
+                            }
+                        }
+                    
                         <div style="margin-left: auto; margin-right: 0em;" class="d-flex">
-                            <button type="button"  class="btn btn-plus-min center-content-vh mx-2">
-                                <img src="/imgs/product/plus.png" width="14px" >
-                            </button>
-                            <button type="button" class="btn btn-plus-min center-content-vh  mx-2">
-                                <img src="/imgs/product/minus.png" width="14px">
-                            </button>
+                            @{
+                                if(Model.InCart)
+                                {
+
+                                }
+                                else{
+                                        <button type="button" class="btn btn-plus-min plus center-content-vh mx-2">
+                                            <img src="/imgs/product/plus.png" width="14px">
+                                        </button>
+                                        <button type="button" class="btn btn-plus-min minus center-content-vh  mx-2">
+                                            <img src="/imgs/product/minus.png" width="14px">
+                                        </button>
+                                }
+                            }
+                            
                         </div>
                     </div>
                     @* <div style="" class="my-0 col-sm-4">
 
                     </div>*@
                 </div>
+                @{
+                    if(Model.InCart)
+                    {
+                                    <button type="button" id="@Model.Id" class="btn  btn-card add-cart p-3 w-100" disabled>Добавлено в корзину</button>
 
-                <button type="button" class="btn  btn-card p-3 w-100">Добавить в корзину</button>
+                    }
+                    else
+                    {
+                                    <button type="button" id="@Model.Id" class="btn  btn-card add-cart p-3 w-100">Добавить в корзину</button>
+
+                    }
+                }
+
             </div>
 
         </div>
     </div>
 </div>
+<script src="/js/cart.js"></script>

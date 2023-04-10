@@ -11,6 +11,9 @@ namespace minishop.Dtos
         public double Price { get; set; }
         public int TypeProductId { get; set; }
 
+        public bool InCart { get; set; }
+
+        public int Count { get; set; }
         public IFormFile Foto { get; set; }
     }
 }
