@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -17,22 +18,23 @@
     <div class="container">
         <main role="main" class="pb-3 form-signin">
             
-            <form>
+            <form method="post" action="/Login">
                 <img class="mb-4 img-signin" src="/imgs/layout/logo.png" alt="" width="72" height="72">
                 <h1 class="h3 mb-3 fw-normal">Войдите в аккаунт</h1>
+                <p style="color:red">@ViewBag.Message</p>
                 <div class="form-floating my-2">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="email" class="form-control" name="Email" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">Email адрес</label>
                 </div>
                 <div class="form-floating my-2">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
+                    <input type="password" class="form-control" name="Password" id="floatingPassword" placeholder="Пароль">
                     <label for="floatingPassword">Пароль</label>
                 </div>
                 <button class="w-100 btn btn-lg btn-delete-cart" type="submit">Вход</button>
                 <p class="price-text-shadow m-0">
                     ⎯⎯⎯⎯ &nbsp &nbspили &nbsp &nbsp⎯⎯⎯⎯
                 </p>
-                <a href="/User/Register" class="w-100 btn btn-lg btn-delete-cart">Регистрация</a>
+                <a href="/Register" class="w-100 btn btn-lg btn-delete-cart">Регистрация</a>
 
             </form>
         </main>
