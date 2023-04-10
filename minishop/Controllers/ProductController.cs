@@ -161,8 +161,14 @@ namespace minishop.Controllers
         [Route("/Product/{id:int}")]
         public IActionResult Details(int id)
         {
+            var user = context.Users.Include(a => a.Cart.CartItems).FirstOrDefault(a => a.Id == 1);
+
+            if (user == null)
+                return BadRequest();
+
             if (id == 0)
                 return BadRequest();
+
             var product = context.Products.Find(id);
             if (product == null)
                 return BadRequest();
@@ -172,8 +178,21 @@ namespace minishop.Controllers
                 Description = product.Description,
                 Price = product.Price,
                 Id = product.Id,
-                TypeProductId = product.TypeProductId
+                TypeProductId = product.TypeProductId,
+                InCart = false,
+                Count = 1
             };
+
+            foreach (var a in user.Cart!.CartItems)
+            {
+                if (a.Product == product)
+                {
+                    productModel.InCart = true;
+                    productModel.Count = a.Count;
+                }
+
+            }
+          
             return View(productModel);
         }
 

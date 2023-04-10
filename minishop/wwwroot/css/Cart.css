@@ -124,10 +124,5 @@
 .btn-plus-min:focus {
     box-shadow: 0 0 0 0.25rem rgba(255,216,106,.25);
 }
-.plus {
-    width: auto;
-    height: auto;
-    
-    background: linear-gradient(to bottom, transparent 35%, #000 35%, #000 65%, transparent 65%), linear-gradient(to right, transparent 35%, #000 35%, #000 65%, transparent 65%);
-}
+
 
