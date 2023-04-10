@@ -26,6 +26,21 @@ namespace minishop.Controllers
         }
 
         [HttpPost]
+        public IActionResult GetCount()
+        {
+            var user = _context.Users.Include(a => a.Cart!.CartItems).ThenInclude(c => c.Product).FirstOrDefault(a => a.Id == 1);
+
+            if (user == null)
+                return BadRequest("error user login");
+
+            if (user.Cart == null)
+                return BadRequest("user is not cart");
+
+
+            return Json(new { count = user.Cart!.CartItems.Count});
+        }
+
+        [HttpPost]
         public IActionResult AddToCart(AddCard addCard)
         {
             if (!ModelState.IsValid)
@@ -42,7 +57,7 @@ namespace minishop.Controllers
             _context.CartItems.Add(item);
             _context.SaveChanges();
             var count = _context.CartItems.Where(a => a.CartId == user.Cart!.Id).Count();
-            return Json("cartcount :" + count);
+            return Json(new { count = count });
         }
         [HttpDelete]
         public IActionResult DeleteInCart(int id)
@@ -58,7 +73,7 @@ namespace minishop.Controllers
                 return BadRequest();
             _context.CartItems.Remove(user.Cart.CartItems.FirstOrDefault(a => a.Id == id)!);
             _context.SaveChanges();
-            return Ok();
+            return Json(new { count = user.Cart.CartItems.Count});
         }
     }
 }

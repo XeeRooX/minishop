@@ -6,22 +6,22 @@
 <div class="p-2 cart-items">
     <h4 class="">Корзина</h4>
     @foreach(var a in Model){
-    <div class="container cart-item-container p-2 m-4" id="@a.Id">
+    <div class="container cart-item-container p-2 m-0 my-4" id="@a.Id">
 
         <div class="row p-2">
             <div class="col-12"><p class="price-text-shadow">@a.Count товар</p></div>
-            <div class="col-2">
+                <div class="col-12 col-sm-12 col-md-2 ">
                 <div class="">
                     <img src="/imgs/products/@(a.ProductId).png" class="p-1 img-product">
                 </div>
             </div>
-            <div class="col-8">
+                <div class="col-12 col-sm-12 col-md-8">
                 <p class="p-0 m-0">
                     <a href="/Product/@(a.ProductId)" class="product-text"> @a.Product.Name</a>
                 </p>
                 <p class="price-text-shadow">@a.Product.Description</p>
             </div>
-            <div class="col-2">
+                <div class="col-12 col-sm-12 col-md-2">
                 <p class="p-0 m-0" style="font-weight:700">
                     @(a.Count * a.Product.Price) ₽
                 </p>
@@ -36,4 +36,4 @@
     }
 
 </div>
-<script src="/js/cart.js"></script>
+@*<script src="/js/cart.js"></script>*@
