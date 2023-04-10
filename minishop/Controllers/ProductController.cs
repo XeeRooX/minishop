@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using minishop.Dtos;
 using minishop.Models;
+using System.Data;
 using System.Linq;
 
 
@@ -293,7 +295,8 @@ namespace minishop.Controllers
             }); ;
         }
 
-            public IActionResult Create()
+        [Authorize(Roles = "admin")]
+        public IActionResult Create()
         {
             ViewBag.Types = new SelectList(context.TypeProducts, "Id", "Name");
             return View();
@@ -301,6 +304,7 @@ namespace minishop.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult Create(ProductModel model)
         {
             if (!ModelState.IsValid)
@@ -330,6 +334,7 @@ namespace minishop.Controllers
             return Redirect($"/Product/{product.Id}");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             if (id == 0)
@@ -350,6 +355,7 @@ namespace minishop.Controllers
             return View(productModel);
         }
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(ProductModel model)
         {
             if (!ModelState.IsValid)
@@ -415,6 +421,7 @@ namespace minishop.Controllers
             return View(productModel);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             if (id == 0)

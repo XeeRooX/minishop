@@ -1,11 +1,13 @@
 ﻿function main() {
+    
     $(".cart-items").on('click', ".del-btn-cart", delIem);
     $(".plus").click(plusItem);
     $(".minus").click(minusItem);
     $(".add-cart").click(addCart);
+    
 }
 
-
+$(document).ready(getCountCart());
 function addCart() {
     var Count = $(".count-cart").attr("value");
     var id = $(this).attr("id");
@@ -13,12 +15,24 @@ function addCart() {
         .done(function (data, statusText) {
             console.log("ok " + data);
             hideButton();
+            getCountCart();
         }).fail(function (xhr, textStatus, errorThrown) { alert("error: " + xhr.responseText); })
         ;
 }
 
-function updateCoutCart(data) {
+function getCountCart() {
+    console.log("start ");
+    $.post("/Cart/GetCount")
+        .done(function (data, statusText) {
+            console.log("ok " + data);
+            updateCoutCart(data);
+        }).fail(function (xhr, textStatus, errorThrown) { alert("error: " + xhr.responseText); })
+        ;
+}
 
+function updateCoutCart(dat) {
+
+    $(".count-cart-layout").text(dat.count);
 }
 
 function hideButton() {
@@ -70,6 +84,7 @@ function delIem() {
     }).done(function (data) {
         deleteItem(id);
         console.log("Item deleted", data);
+        updateCoutCart(data);
     }).fail(function (xhr, textStatus) {
         alert(xhr.responseText);
     });
