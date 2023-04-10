@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using minishop.Dtos;
 using minishop.Models;
+using System.Linq;
 
 
 namespace minishop.Controllers
@@ -102,24 +103,22 @@ namespace minishop.Controllers
                 {
                     return BadRequest("Product with Id=LastProductId not found");
                 }
-                double lastProductPrice = lastProduct.Price;
+                
                 if (prData.DescendingPrice)
                 {
                     products = from p in context.Products
-                               where p.Price >= prData.PriceFrom && p.Price <= lastProductPrice                              
-                               where p.Id != prData.LastProductId
+                               where p.Price >= prData.PriceFrom && p.Price <= prData.PriceTo
                                orderby p.Price descending
                                select p;
                 }
                 else
                 {
                     products = from p in context.Products
-                               where p.Price >= lastProductPrice && p.Price <= prData.PriceTo
-                               where p.Id != prData.LastProductId
+                               where p.Price >= prData.PriceFrom && p.Price <= prData.PriceTo
                                orderby p.Price ascending
                                select p;
                 }
-                
+
             }
 
             if (categoryNumber != 0)
@@ -129,10 +128,12 @@ namespace minishop.Controllers
                            select p;
             }
 
-            products = products.Take(countProducts + 1);
-            int countLoadedProducts = products.Count();
+            int lastProdIdInList = products.ToList().FindIndex(p => p.Id == prData.LastProductId);
 
-            products = products.Take(countProducts);
+            var products2 = products.Skip(lastProdIdInList + 1).Take(countProducts + 1);
+            int countLoadedProducts = products2.Count();
+
+            products = products.Skip(lastProdIdInList + 1).Take(countProducts);
 
             var resProducts = new List<ProductCard>();
 
@@ -229,20 +230,15 @@ namespace minishop.Controllers
                 if (prData.DescendingPrice)
                 {
                     products = from p in context.Products
-                               where p.Price <= lastProductPrice
-                               where p.Id != prData.LastProductId
                                orderby p.Price descending
                                select p;
                 }
                 else
                 {
                     products = from p in context.Products
-                               where p.Price >= lastProductPrice
-                               where p.Id != prData.LastProductId
                                orderby p.Price ascending
                                select p;
                 }
-                
             }
 
             if (categoryNumber != 0)
@@ -252,12 +248,12 @@ namespace minishop.Controllers
                            select p;
             }
 
-            products = products.Take(countProducts + 1);
-            int countLoadedProducts = products.Count();
+            int lastProdIdInList = products.ToList().FindIndex(p => p.Id == prData.LastProductId);
 
-            products = products.Take(countProducts);
+            var products2 = products.Skip(lastProdIdInList + 1).Take(countProducts + 1);
+            int countLoadedProducts = products2.Count();
 
-            
+            products = products.Skip(lastProdIdInList + 1).Take(countProducts);
 
             var resProducts = new List<ProductCard>();
 
@@ -284,8 +280,6 @@ namespace minishop.Controllers
                 }
 
             }
-
-
 
             bool lastPage = false;
             if (countLoadedProducts != countProducts + 1)

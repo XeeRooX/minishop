@@ -28,7 +28,7 @@
     <div class="w-100 p-3 my-4 card-content d-flex">
         <div class="row w-100 mx-auto">
             <div class="col-lg-6 col-sm-12 col-xs-12 col-md-12 p-0 center-content">
-                <div class="row w-100 m-0">
+                <div class="row w-100 m-0 sort-type ascending">
                     <div class="col-6 m-0 p-2 p-0">
                         <div class="form-floating ">
                             <input type="number" class="form-control input-filter price-from" id="floatingInput" placeholder="0" min="0"
@@ -72,15 +72,15 @@
 
     <div class="row products-list">
 
-        <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6 product-card" id="">
+        <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6 product-card product-card-template d-none" id="">
             <div class="card text-center card-content">
-                <img src="" class="card-img-top card-img p-2" alt="watch">
+                <img src="~/imgs/products/" class="card-img-top card-img p-2" alt="watch">
                 <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="/Products/" class="text-card">Название</a>
+                    <h5 class="">
+                        <a href="/Products/" class="text-card card-title">Название</a>
                     </h5>
-                    <p class="card-text mb-4"> ₽</p>
-                    <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
+                    <p class="card-text mb-4 prod-price"></p>
+                    <button class="btn btn-card px-3 py-2 add-to-cart-btn">Добавить в корзину</button>
                     <button class="btn btn-incard px-3 py-2 d-none">Уже в корзине</button>
                 </div>
             </div>
@@ -89,7 +89,7 @@
     </div>
 
     <div class="w-100 text-center">
-        <button href="#" class="btn btn-card px-4 py-2 my-3">Загрузить еще</button>
+        <button href="#" class="btn btn-card px-4 py-2 my-3 d-none load-more-btn">Загрузить еще</button>
     </div>
 </div>
 
