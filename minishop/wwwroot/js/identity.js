@@ -1,5 +1,6 @@
 ﻿function main() {
     getUserInfo();
+
 }
 
 function getUserInfo() {

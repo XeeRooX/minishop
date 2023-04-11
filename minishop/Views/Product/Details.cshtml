@@ -79,12 +79,10 @@
                         if (Context.User.Identity!.IsAuthenticated)
                         {
                             <button type="button" id="@Model.Id" class="btn  btn-card add-cart p-3 w-100">Добавить в корзину</button>
-
                         }
                         else
                         {
                             <a href="/Login" type="button" id="@Model.Id" class="btn  btn-card p-3 w-100">Войдите, чтобы добавить в корзину</a>
-
                         }
                     }
                 }
