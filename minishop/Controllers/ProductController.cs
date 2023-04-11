@@ -52,8 +52,8 @@ namespace minishop.Controllers
         public IActionResult LoadFromTo([FromBody] LoadProductData prData)
         {
             int countProducts = 8;
-            int userId = 1;
-
+            var userTemp = context.Users.FirstOrDefault(u => u.Email == HttpContext.User.Identity!.Name);
+            int userId = userTemp != null ? userTemp.Id : 0;
 
             if (ModelState.IsValid != true)
             {
@@ -179,7 +179,8 @@ namespace minishop.Controllers
         public IActionResult LoadByPrice([FromBody] LoadProductData prData)
         {
             int countProducts = 8;
-            int userId = 1;
+            var userTemp = context.Users.FirstOrDefault(u => u.Email == HttpContext.User.Identity!.Name);
+            int userId = userTemp != null ? userTemp.Id : 0;
 
 
             if (ModelState.IsValid != true)

@@ -73,13 +73,18 @@
                                 <a href="/Product/@pr.Id" class="text-card">@pr.Title</a>
                             </h5>
                             <p class="card-text mb-4">@pr.Price ₽</p>
-                            @if (!pr.InCart)
+                            @if (Context.User.Identity!.IsAuthenticated)
                             {
-                                <button class="btn btn-card px-3 py-2 add-to-cart-btn">Добавить в корзину</button>
-                            }
-                            else
-                            {
-                                <button class="btn btn-incard px-3 py-2">Уже в корзине</button>
+                                @if (!pr.InCart)
+                                {
+                                    <button class="btn btn-card px-3 py-2 add-to-cart-btn">Добавить в корзину</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-incard px-3 py-2">Уже в корзине</button>
+                                }
+                            }else{
+                                <a href="/Login" class="btn btn-card px-3 py-2">Войдите, чтобы добавить</a>
                             }
                             <button class="btn btn-incard px-3 py-2 d-none">Уже в корзине</button>
                         </div>

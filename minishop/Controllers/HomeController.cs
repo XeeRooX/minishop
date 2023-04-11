@@ -22,7 +22,8 @@ namespace minishop.Controllers
             var products = _context.Products.Take(8).ToList();
             var resProds = new List<ProductCard>();
 
-            int userId = 1;
+            var userTemp = _context.Users.FirstOrDefault(u => u.Email == HttpContext.User.Identity!.Name);
+            int userId = userTemp != null ? userTemp.Id : 0;
 
             foreach (var pr in products)
             {

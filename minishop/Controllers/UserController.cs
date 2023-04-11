@@ -113,7 +113,7 @@ namespace minishop.Controllers
         }
 
         [Route("/Logout")]
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "user, admin")]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
