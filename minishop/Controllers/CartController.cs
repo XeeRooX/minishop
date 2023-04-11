@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using minishop.Dtos;
 using minishop.Models;
+using System.Data;
 using System.Diagnostics;
 
 namespace minishop.Controllers
@@ -14,21 +16,28 @@ namespace minishop.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "admin, user")]
         public IActionResult Index()
         {
-            var user = _context.Users.Include(a => a.Cart!.CartItems).ThenInclude(c => c.Product).FirstOrDefault(a => a.Id == 1);
+
+            var user = _context.Users.Include(a => a.Cart!.CartItems).ThenInclude(c => c.Product).FirstOrDefault(a => a.Email == HttpContext.User.Identity!.Name);
 
             if (user == null)
-                return BadRequest();
+                return BadRequest("Auth error (no user)");
+
+            if (user.Cart == null)
+                return BadRequest("user is not cart");
 
             var products = user.Cart!.CartItems;
             return View(products);
         }
+        
 
         [HttpPost]
+        [Authorize(Roles = "admin, user")]
         public IActionResult GetCount()
         {
-            var user = _context.Users.Include(a => a.Cart!.CartItems).ThenInclude(c => c.Product).FirstOrDefault(a => a.Id == 1);
+            var user = _context.Users.Include(a => a.Cart!.CartItems).ThenInclude(c => c.Product).FirstOrDefault(a => a.Email == HttpContext.User.Identity!.Name);
 
             if (user == null)
                 return BadRequest("error user login");
@@ -41,11 +50,12 @@ namespace minishop.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, user")]
         public IActionResult AddToCart(AddCard addCard)
         {
             if (!ModelState.IsValid)
                 return BadRequest("error");
-            var user = _context.Users.Include(a => a.Cart).FirstOrDefault(a => a.Id == 1);
+            var user = _context.Users.Include(a => a.Cart).FirstOrDefault(a => a.Email == HttpContext.User.Identity!.Name);
 
             if (user == null)
                 return BadRequest();
@@ -60,9 +70,10 @@ namespace minishop.Controllers
             return Json(new { count = count });
         }
         [HttpDelete]
+        [Authorize(Roles = "admin, user")]
         public IActionResult DeleteInCart(int id)
         {
-            var user = _context.Users.Include(a => a.Cart!.CartItems).FirstOrDefault(a => a.Id == 1);
+            var user = _context.Users.Include(a => a.Cart!.CartItems).FirstOrDefault(a => a.Email == HttpContext.User.Identity!.Name);
 
             if (user == null)
                 return BadRequest();

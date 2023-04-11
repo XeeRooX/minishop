@@ -9,6 +9,7 @@ using System.Data;
 using System.Security.Cryptography;
 using System.Text;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace minishop.Controllers
 {
@@ -29,13 +30,13 @@ namespace minishop.Controllers
 
         [Route("/Login")]
         [HttpPost]
-        public IActionResult Login(UserModel userModel)
+        public IActionResult Login(LoginModel userModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("error send model");
             }
-            var user = _context.Users.FirstOrDefault(a => a.Email == userModel.Email);
+            var user = _context.Users.Include(a=>a.Role).FirstOrDefault(a => a.Email == userModel.Email);
             if (user == null)
             {
                 ViewBag.Message = "Пользователь с таким email не найден";
@@ -83,7 +84,7 @@ namespace minishop.Controllers
             var newUser = new User()
             {
                 Name = userModel.Name,
-                Email = userModel.Name,
+                Email = userModel.Email,
                 Cart = new Cart(),
                 Surname = userModel.Surname,
                 Password = GetHash(userModel.Password),
@@ -116,7 +117,18 @@ namespace minishop.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");//Json("ok");
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        [Authorize(Roles ="admin, user")]
+        public IActionResult Info()
+        {
+            var user = _context.Users.FirstOrDefault(a => a.Email == HttpContext.User.Identity!.Name);
+            if (user == null)
+                return BadRequest("Auth error");
+
+            return Json(new { name = user.Name, surname = user.Surname});
         }
 
         public static string GetHash(string password)

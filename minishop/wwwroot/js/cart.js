@@ -26,7 +26,7 @@ function getCountCart() {
         .done(function (data, statusText) {
             console.log("ok " + data);
             updateCoutCart(data);
-        }).fail(function (xhr, textStatus, errorThrown) { alert("error: " + xhr.responseText); })
+        }).fail(function (xhr, textStatus, errorThrown) { console.log("user not login"); })
         ;
 }
 

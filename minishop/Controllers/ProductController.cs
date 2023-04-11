@@ -392,39 +392,58 @@ namespace minishop.Controllers
         [Route("/Product/{id:int}")]
         public IActionResult Details(int id)
         {
-            var user = context.Users.Include(a => a.Cart.CartItems).FirstOrDefault(a => a.Id == 1);
-
-            if (user == null)
-                return BadRequest();
-
-            if (id == 0)
-                return BadRequest();
-
             var product = context.Products.Find(id);
             if (product == null)
                 return BadRequest();
-            var productModel = new ProductModel()
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Id = product.Id,
-                TypeProductId = product.TypeProductId,
-                InCart = false,
-                Count = 1
-            };
 
-            foreach (var a in user.Cart!.CartItems)
+            if (HttpContext.User.Identity!.IsAuthenticated)
             {
-                if (a.Product == product)
+                var user = context.Users.Include(a => a.Cart.CartItems).FirstOrDefault(a => a.Email == HttpContext.User.Identity!.Name);
+
+                if (user == null)
+                    return BadRequest();
+
+                if (id == 0)
+                    return BadRequest();
+
+              
+                var productModel = new ProductModel()
                 {
-                    productModel.InCart = true;
-                    productModel.Count = a.Count;
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Id = product.Id,
+                    TypeProductId = product.TypeProductId,
+                    InCart = false,
+                    Count = 1
+                };
+
+                foreach (var a in user.Cart!.CartItems)
+                {
+                    if (a.Product == product)
+                    {
+                        productModel.InCart = true;
+                        productModel.Count = a.Count;
+                    }
+
                 }
 
+                return View(productModel);
             }
-          
-            return View(productModel);
+            else
+            {
+                var productModel = new ProductModel()
+                {
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Id = product.Id,
+                    TypeProductId = product.TypeProductId,
+                    InCart = false,
+                    Count = 1
+                };
+                return View(productModel);
+            }
         }
 
         [Authorize(Roles = "admin")]
