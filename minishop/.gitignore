@@ -11,4 +11,4 @@ target/
 logs/
 log/
 /db
-minishop/wwwroot/imgs/prodocts
+/wwwroot/imgs/products/
