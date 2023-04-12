@@ -10,8 +10,8 @@ using minishop.Models;
 namespace minishop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230403142244_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20230412181119_Migration7")]
+    partial class Migration7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,7 +161,7 @@ namespace minishop.Migrations
 
             modelBuilder.Entity("minishop.Models.CartItem", b =>
                 {
-                    b.HasOne("minishop.Models.Cart", "Cart")
+                    b.HasOne("minishop.Models.Cart", null)
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -172,8 +172,6 @@ namespace minishop.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

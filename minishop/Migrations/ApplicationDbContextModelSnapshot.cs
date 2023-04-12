@@ -159,7 +159,7 @@ namespace minishop.Migrations
 
             modelBuilder.Entity("minishop.Models.CartItem", b =>
                 {
-                    b.HasOne("minishop.Models.Cart", "Cart")
+                    b.HasOne("minishop.Models.Cart", null)
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -170,8 +170,6 @@ namespace minishop.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });
