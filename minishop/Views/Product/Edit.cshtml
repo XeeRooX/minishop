@@ -1,0 +1,43 @@
+﻿@using minishop.Dtos
+@model ProductModel
+@{
+    ViewData["Title"] = "Редактирование товара";
+
+}
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+<div class="p-2 container">
+    <h4 class="">Редактирование товара</h4>
+    <p>@ViewBag.Message</p>
+    <form method="post" action="/Product/Edit" enctype="multipart/form-data">
+        <input type="text" class="form-control d-none" name="Id" value="@Model.Id" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Название</label>
+            <input type="text" class="form-control" name="Name" value="@Model.Name" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Цена</label>
+            <div class="input-group">
+                <span class="input-group-text">₽</span>
+                <input type="number" class="form-control" name="Price" value="@Model.Price" id="exampleInputPassword1">
+            </div>
+
+        </div>
+
+        <select class="form-select" asp-for="TypeProductId" name="TypeProductId" asp-items="ViewBag.Types" aria-label="Default select example">
+            <option selected>Выберите тип часов</option>
+        </select>
+
+        <div class="mb-3">
+            <label for="Description" class="form-label">Описание</label>
+
+            <textarea class="form-control" asp-for="Description" name="Description" id="Description" aria-label="Описание"></textarea>
+        </div>
+        <p>Загрузите фото часов</p>
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" name="Foto" id="inputGroupFile02" accept="image/*">
+            <label class="input-group-text" for="inputGroupFile02">Загрузка</label>
+        </div>
+
+        <button type="submit" class="btn btn-card">Сохранить</button>
+    </form>
+</div>

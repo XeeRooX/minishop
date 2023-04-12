@@ -28,35 +28,39 @@
     <div class="w-100 p-3 my-4 card-content d-flex">
         <div class="row w-100 mx-auto">
             <div class="col-lg-6 col-sm-12 col-xs-12 col-md-12 p-0 center-content">
-                <div class="row w-100 m-0">
+                <div class="row w-100 m-0 ">
                     <div class="col-6 m-0 p-2 p-0">
                         <div class="form-floating ">
-                            <input type="number" class="form-control input-filter" id="floatingInput" placeholder="0">
+                            <input type="number" class="form-control input-filter price-from" id="floatingInput" placeholder="0" min="0" max="9999999"
+                                   @*oninput="this.value =
+                                   !!this.value && Math.abs(this.value)>= 0 ? Math.abs(this.value) : null"*@>
                             <label for="floatingInput">Цена от</label>
                         </div>
                     </div>
                     <div class="col-6 m-0 p-2 p-0">
                         <div class="form-floating">
-                            <input type="number" class="form-control input-filter" id="floatingInput" placeholder="1">
+                            <input type="number" class="form-control input-filter price-to" id="floatingInput" placeholder="1" min="0" max="9999999"
+                                   @*oninput="this.value =
+                                   !!this.value && Math.abs(this.value)>= 0 ? Math.abs(this.value) : null"*@>
                             <label for="floatingInput">Цена до</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="p-0 col-sm-12 col-lg-6 col-xs-12 col-md-12">
-                <div class="row w-100 m-0">
+                <div class="row w-100 m-0 sort-type ascending">
                     <div class="col-3 p-2">
-                        <button class="btn btn-card px-3 py-2 w-100 center-content-vh" style="height: 58px">
-                            <img src="~/imgs/filter/asc.png" width="40px"/>
+                        <button class="btn btn-card px-3 py-2 w-100 center-content-vh sort-selected sort-btn desc-btn" style="height: 58px">
+                            <img src="~/imgs/filter/asc.png" width="40px" />
                         </button>
                     </div>
                     <div class="col-3 p-2">
-                        <button href="#" class="btn btn-card px-3 py-2 w-100" style="height: 58px">
+                        <button href="#" class="btn btn-card px-3 py-2 w-100 sort-btn asc-btn" style="height: 58px">
                             <img src="~/imgs/filter/desc.png" width="40px" />
                         </button>
                     </div>
                     <div class="col-6 p-2">
-                        <button href="#" class="btn btn-card px-3 py-2 w-100" style="height: 58px">
+                        <button href="#" class="btn btn-card px-3 py-2 w-100 search-btn" style="height: 58px">
                             Найти
                         </button>
                     </div>
@@ -65,19 +69,34 @@
         </div>
     </div>
 
-    <div class="row ">
-        @foreach (var product in Model)
-        {
-            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6">
-                <div class="card text-center card-content">
-                    <img src="https://api.lorem.space/image/watch?w=500&h=500" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Title</h5>
-                        <p class="card-text mb-4">$@product.Price</p>
-                        <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
-                    </div>
+    <div class="row products-list">
+
+        <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6 product-card product-card-template d-none" id="">
+            <div class="card text-center card-content">
+                <img src="~/imgs/products/" class="card-img-top card-img p-2" alt="watch">
+                <div class="card-body">
+                    <h5 class="">
+                        <a href="/Product/" class="text-card card-title">Название</a>
+                    </h5>
+                    <p class="card-text mb-4 prod-price"></p>
+                    @if (Context.User.Identity!.IsAuthenticated)
+                    {
+                        <button class="btn btn-card px-3 py-2 add-to-cart-btn">Добавить в корзину</button>
+                        <button class="btn btn-incard px-3 py-2 d-none">Уже в корзине</button>
+                    }
+                    else
+                    {
+                        <a href="/Login" class="btn btn-card px-3 py-2">Войдите, чтобы добавить</a>
+                    }
                 </div>
             </div>
-        }
+        </div>
+
+    </div>
+
+    <div class="w-100 text-center">
+        <button href="#" class="btn btn-card px-4 py-2 my-3 d-none load-more-btn">Загрузить еще</button>
     </div>
 </div>
+
+<script src="~/js/categorypage.js"></script>

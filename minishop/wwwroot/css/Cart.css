@@ -28,8 +28,9 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    max-width: 75%;
-    height: auto;
+    max-height: 115px;
+    object-fit:contain;
+    
 }
 
 .btn-delete-cart {
@@ -41,14 +42,14 @@
     font-weight: 600;
 }
 
-.btn-delete-cart:hover {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #e0efff;
-    color: #0050e0;
-    font-weight: 600;
-}
+    .btn-delete-cart:hover {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #e0efff;
+        color: #0050e0;
+        font-weight: 600;
+    }
 
 .form-signin {
     width: 100%;
@@ -56,11 +57,13 @@
     padding: 15px;
     margin: auto;
 }
+
 .img-signin {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
 .price-container {
     background-color: #0ead43;
     color: white;
@@ -69,6 +72,7 @@
     border-radius: 5px;
     display: inline-block;
 }
+
 .btn-add-cart {
     background-color: #0050e0;
     color: white;
@@ -77,41 +81,49 @@
     width: 100%;
 }
 
-.btn-add-cart:hover {
-    background-color: #0042b8;
-    color: white;
-    font-weight: 600;
-    border-radius: 10px;
-   
-}
+    .btn-add-cart:hover {
+        background-color: #0042b8;
+        color: white;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
 .img-product-details {
     border-radius: 10px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width:100%;
-    height:auto;
+    width: 100%;
+    height: auto;
 }
 
 .details-product-container {
     border-radius: 10px;
     box-shadow: 0px 0px 12px 2px rgba(34, 60, 80, 0.2);
-    width:100%;
-    height:auto;
+    width: 100%;
+    height: auto;
 }
+
 .size-col-price {
     /*width: 100%;
     height: auto;*/
 }
+
 .btn-plus-min {
-    background-color: #0050e0;
-    color: white;
-    font-weight: 600;
-    border-radius: 10px;
-    width:20px;
-    height:20px;
+    font-weight: 900;
+    font-size: 24px;
+    border-radius: 50%;
+    width: 31px;
+    height: 31px;
+    background-color: #ffd86a;
+    color: #f8f9fa;  
 }
 .btn-plus-min:hover {
-    background-color: #0042b8;
-    color: white;
+    color: #ebecec;
 }
+
+.btn-plus-min:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255,216,106,.25);
+}
+
+

@@ -19,9 +19,9 @@
                 </a>
                
                 <div class="justify-content-start d-flex" id="navbarNav" >
-                    <a class="d-inline btn cart-button p-2 d-flex align-items-center justify-content-center">
+                    <a href="/Cart" class="d-inline btn cart-button p-2 d-flex align-items-center justify-content-center">
                         <img src="~/imgs/layout/cart.png" alt="minishop" width="33" class="me-1">
-                        <span class=" badge rounded-pill bg-black ms-0">
+                        <span class=" badge count-cart-layout rounded-pill bg-black ms-0">
                             0
                         </span>
                     </a>
@@ -31,11 +31,11 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="user-info" style="border-radius: 18px;">
                             <li>
-                                <label class="dropdown-item mt-2">Василий Петрович</label>
+                                <label class="dropdown-item user-info mt-2">Василий Петрович</label>
                             </li>
                             <li>
                                 <div class="px-3 pt-2">
-                                    <a class="dropdown-item py-2 cart-button text-center ">
+                                    <a href="/Logout" class="dropdown-item py-2 cart-button button-login text-center ">
                                         Выйти
                                     </a>
                                 </div>
@@ -47,13 +47,16 @@
             </div>
         </nav>
     </header>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="/js/cart.js"></script>
+    <script src="/js/identity.js"></script>
 </body>
 </html>

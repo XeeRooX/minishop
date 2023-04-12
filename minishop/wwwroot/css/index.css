@@ -29,6 +29,21 @@
     align-items: center;
 }
 
+.btn-incard {
+    background-color: #929393;
+    color: #f8f9fa;
+    border-radius: 15px;
+    font-weight: 600;
+}
+.btn-incard:hover {
+    color: #f8f9fa;
+}
+
+.btn-incard:focus {
+    box-shadow: none;
+}
+
+
 .btn-card {
     background-color: #ffd86a;
     color: #f8f9fa;
@@ -58,4 +73,18 @@
     border-color: #ffd86a;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(255,216,106,.25);
+}
+
+.card-img {
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 18px;  
+}
+
+.sort-selected {
+    box-shadow: 0 0 0 0.5rem rgba(255,216,106,.4);
+}
+
+.sort-btn:focus {
+    box-shadow: 0 0 0 0.5rem rgba(255,216,106,.4);
 }

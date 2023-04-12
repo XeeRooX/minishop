@@ -1,4 +1,7 @@
-﻿@{
+﻿@using minishop.Dtos
+@model IEnumerable<ProductCard>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
@@ -52,54 +55,43 @@
                     </div>
                     <div class="col-8 align-middle mx-0 center-content text-break h-100">
                         <a href="/Product?category=all" class="text-card w-100 h-100 center-content">Все категории</a>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="container pt-4">
-        <div class="row ">
-            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6">
-                <div class="card text-center card-content">
-                    <img src="https://api.lorem.space/image/watch?w=500&h=500" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Watch name</h5>
-                        <p class="card-text mb-4">$25.00</p>
-                        <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
+        <div class="row products-list">
+            @foreach (var pr in Model)
+            {
+                <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6 product-card" id="@pr.Id">
+                    <div class="card text-center card-content">
+                        <img src="~/imgs/products/@(pr.Id).png" class="card-img-top card-img p-2" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="/Product/@pr.Id" class="text-card">@pr.Title</a>
+                            </h5>
+                            <p class="card-text mb-4">@pr.Price ₽</p>
+                            @if (Context.User.Identity!.IsAuthenticated)
+                            {
+                                @if (!pr.InCart)
+                                {
+                                    <button class="btn btn-card px-3 py-2 add-to-cart-btn">Добавить в корзину</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-incard px-3 py-2">Уже в корзине</button>
+                                }
+                            }else{
+                                <a href="/Login" class="btn btn-card px-3 py-2">Войдите, чтобы добавить</a>
+                            }
+                            <button class="btn btn-incard px-3 py-2 d-none">Уже в корзине</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6">
-                <div class="card text-center card-content">
-                    <img src="https://api.lorem.space/image/watch?w=500&h=500" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Watch name</h5>
-                        <p class="card-text mb-4">$25.00</p>
-                        <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6">
-                <div class="card text-center card-content">
-                    <img src="https://api.lorem.space/image/watch?w=500&h=500" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Watch name</h5>
-                        <p class="card-text mb-4">$25.00</p>
-                        <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col p-3 col-md-4 col-lg-3 col-sm-4 col-xs-6">
-                <div class="card text-center card-content">
-                    <img src="https://api.lorem.space/image/watch?w=500&h=500" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Watch name</h5>
-                        <p class="card-text mb-4">$25.00</p>
-                        <a href="#" class="btn btn-card px-3 py-2">Добавить в корзину</a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
+<script src="~/js/index.js"></script>
