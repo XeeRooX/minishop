@@ -19,9 +19,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+{
     context!.Database.Migrate();
+    var initDb = new InitializeDb(app.Configuration, context);
+    initDb.Initialize();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -43,3 +48,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+

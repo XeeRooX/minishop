@@ -4,7 +4,7 @@
 
 namespace minishop.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class Migration7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

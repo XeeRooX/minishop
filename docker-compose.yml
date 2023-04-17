@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  minishop:
+    image: ${DOCKER_REGISTRY-}minishop
+    build:
+      context: .
+      dockerfile: minishop/Dockerfile
